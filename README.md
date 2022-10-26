@@ -1,5 +1,5 @@
 # FastTuga-Website
  
  Backend : Laravel
- Frontend : Vue
- Websocket : Node
+ Frontend : Vue.js
+ Websocket : Node.js
