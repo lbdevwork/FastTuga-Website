@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Customer extends Model{
-    use HasApiTokens, HasFactory, Notifiable , SoftDeletes;
+class Customer extends Model
+{
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +27,15 @@ class Customer extends Model{
         'custom'
     ];
 
-    public function user(){
+    protected $with = ['user'];
+
+    public function user()
+    {
         return $this->belongsTo('App\Models\User')->withTrashed();      // With trashed é o softdelete
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

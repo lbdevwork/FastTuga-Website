@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Order extends Model{
-    use HasApiTokens, HasFactory, Notifiable , SoftDeletes;
+class Order extends Model
+{
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +32,30 @@ class Order extends Model{
         'custom'
     ];
 
-    public function customer(){
+    protected $hidden = [
+        'created_at', 'updated_at', 'deleted_at'
+    ];
+
+    
+
+    public function products()
+    {
+        $this->belongsToMany(Product::class, 'order_items')->withTrashed();
+    }
+
+    public function customer()
+    {
         return $this->belongsTo('App\Models\Customer')->withTrashed();
     }
+
+    public function users()
+    {
+        $this->belongsToMany(User::class, 'order_items', 'id', 'preparation_by')->withTrashed();
+    }
+
+    public function delivered_by()
+    {
+        $this->belongsTo(User::class)->withTrashed();
+    }
+
 }
