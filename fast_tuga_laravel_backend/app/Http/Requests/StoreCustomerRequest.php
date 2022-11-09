@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class StoreCustomerRequest extends FormRequest
 {
     /**
@@ -24,7 +25,13 @@ class StoreCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id' => ['required|integer','unique:users,id',],
+            'phone' => 'required|string|max:20',
+            'points' => 'required|integer',
+            'nif' => 'required|string|max:9',
+            'default_payment_type' => 'required|string|in:visa,paypal,mbway',
+            'default_payment_reference' => 'required|string|max:255',
+            'custom' => 'nullable|json',
         ];
     }
 }

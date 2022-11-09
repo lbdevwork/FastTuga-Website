@@ -24,7 +24,11 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'type' => 'required|string|in:visa,paypal,mbway',
+            'blocked' => 'required|integer|digits:1',
+            'custom' => 'nullable|json',
         ];
     }
 }
