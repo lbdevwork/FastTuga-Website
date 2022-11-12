@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PaymentTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends FormRequest
@@ -30,10 +32,10 @@ class StoreUserRequest extends FormRequest
             'password' => [
                 'required', 'string', 'max:255',
                 Password::min(4)
-                ->mixedCase()
-                ->numbers()
+                    ->mixedCase()
+                    ->numbers()
             ],
-            'type' => 'required|string|in:visa,paypal,mbway',
+            'type' => 'required|string|' . new Enum(PaymentTypeEnum::class),
             'blocked' => 'required|integer|digits:1',
             'photo_url' => 'nullable|string|max:255',
             'custom' => 'nullable|json',

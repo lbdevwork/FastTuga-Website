@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Enums;
+
+enum OrderStatusEnum: string
+{
+    case Preparing = 'P';
+    case Ready = 'R';
+    case Delivered = 'D';
+    case Cancelled = 'C';
+}
