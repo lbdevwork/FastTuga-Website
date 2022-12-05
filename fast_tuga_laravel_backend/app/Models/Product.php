@@ -25,6 +25,10 @@ class Product extends Model{
         'custom'
     ];
 
+    protected $casts = [
+        'status' => ProductStatusEnum::class
+    ];
+
     public function orders()
     {
         return $this->belongsToMany(Order::class , 'order_items');

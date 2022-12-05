@@ -2,29 +2,27 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ProductStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreProductRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+
     public function authorize()
     {
-        return false;
+        return auth()->user()->type == "EM";
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'name' => ['required|string|max:255|unique:product,name'],
+            'type' => ['required|' . new Enum(ProductStatusEnum::class)],
+            'description' => ['required|string|max:255'],
+            'photo_url' => ['required|string|max:255'],
+            'price' => ['required|numeric|between:0,999999.99'],
+            'custom' => ['nullable|json'],
         ];
     }
 }

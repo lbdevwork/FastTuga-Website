@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Enums;
+
+enum PaymentTypeEnum: string
+{
+    case VISA = 'VISA';
+    case PAYPAL = 'PAYPAL';
+    case MBWAY = 'MBWAY';
+}

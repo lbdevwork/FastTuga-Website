@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PaymentTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -26,7 +28,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'type' => 'required|string|in:visa,paypal,mbway',
+            'type' => 'required|string|' . new Enum(PaymentTypeEnum::class),
             'blocked' => 'required|integer|digits:1',
             'custom' => 'nullable|json',
         ];
